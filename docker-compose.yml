@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  front-end:
+    image: david32145/fitonserver-web
+    container_name: fron_end_react
+    depends_on:
+      - "back-end"
+      - "mongodb"
+    ports:
+      - "5000:80"
+    env_file: ./.docker-env
+  back-end:
+    image: david32145/fitonserver
+    links:
+      - mongodb
+    container_name: back_end_express
+    depends_on:
+      - "mongodb"
+    ports:
+      - "3000:3000"
+      - "3500:3500"
+      - "4000:4000"
+    env_file: ./.docker-env
+  mongodb:
+    image: bitnami/mongodb
+    container_name: mongodb
+    volumes:
+      - mongodb_data:/bitnami/mongodb
+    ports:
+      - "27017:27017"
+    env_file: ./.docker-env
+  watchtower:
+    image: v2tec/watchtower
+    container_name: watchtower
+    depends_on:
+      - "front-end"
+      - "back-end"
+      - "mongodb"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --debug --interval 30
+
+volumes:
+  mongodb_data:

@@ -1,0 +1,43 @@
+name: Deploy Web
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'web/**'
+
+jobs:
+  deploy:
+    name: Deploy web
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Docker cache
+        uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+        with:
+          key: docker-cache-{hash}
+          restore-keys: |
+            docker-cache-
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Make env vars
+        working-directory: ./web
+        env:
+          SERVER_URI: http://35.226.252.4:3000
+          VIDEO_URI: http://35.226.252.4:4000/live
+          STREAM_URI: rtmp://35.226.252.4:3500/live
+        run: ./makeenv.sh
+      - name: Docker build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./web
+          push: true
+          tags: david32145/fitonserver-web:latest

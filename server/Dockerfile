@@ -8,6 +8,4 @@ RUN yarn install
 
 RUN yarn tsc --build
 
-COPY .env ./build/.env
-
-ENTRYPOINT ["node", "./src/server"]
+ENTRYPOINT ["node", "./build/src/server"]

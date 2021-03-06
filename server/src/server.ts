@@ -1,5 +1,5 @@
 import debug from 'debug'
-import app from '@app/statup'
+import app from './app/statup'
 import { nodeMediaServer } from './app/stream'
 
 const httpLog = debug('@app/http')

@@ -1,6 +1,6 @@
 import debug from 'debug'
-import { LiveModel } from '@models/Live'
-import { LiveRepository } from '@repositories/LiveRepository'
+import { LiveModel } from '../models/Live'
+import { LiveRepository } from '../repositories/LiveRepository'
 import { Router } from 'express'
 
 const routesLog = debug('@app/routes')

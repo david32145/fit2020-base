@@ -1,0 +1,49 @@
+name: CI/CD Web
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  ci-job:
+    name: CI/CD job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Web -> Install depencies
+        working-directory: ./web
+        run: yarn install
+      - name: Web -> Check lint
+        working-directory: ./web
+        run: yarn eslint --ext=.jsx,.js,.tsx,.ts .
+      - name: Web -> Run tests
+        working-directory: ./web
+        run: yarn jest
+      - name: Server -> Install depencies
+        working-directory: ./server
+        run: yarn install
+      - name: Server -> Check lint
+        working-directory: ./server
+        run: yarn eslint --ext=.jsx,.js,.tsx,.ts .
+      - name: Server -> Run tests
+        working-directory: ./server
+        run: yarn jest

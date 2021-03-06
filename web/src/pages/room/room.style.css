@@ -1,0 +1,12 @@
+.room-page {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.room-page h1 {
+    color: #FFF;
+    margin-bottom: 20px;
+}

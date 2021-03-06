@@ -1,0 +1,102 @@
+.lives-list-page {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 40px;
+}
+
+.title {
+    color: #FFF;
+}
+
+.start-live-button {
+    margin-top: 60px;
+    background-color: #F4442E;
+    border: none;
+    height: 48px;
+    color: #FFF;
+    border-radius: 4px;
+    margin-left: auto;
+    font-size: 16px;
+    font-weight: 500;
+    width: 200px;
+    cursor: pointer;
+    transition: 0.3s all;
+}
+
+.start-live-button:hover {
+    transform: scale(1.05);
+    opacity: 0.96;
+}
+
+.start-live-button:active {
+    transform: scale(1);
+}
+
+.lives-title {
+    color: #FFF;
+    margin-top: 40px;
+}
+
+.card-list {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.card {
+    background-color: #2B0504;
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    height: 250px;
+    position: relative;
+}
+
+.card img {
+    width: 100%;
+}
+
+.card a {
+    display: block;
+    text-decoration: none;
+    color: #FFF;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 15px;
+    opacity: 0.95;
+    cursor: pointer;
+}
+
+.card a:hover {
+    opacity: 0.8;
+}
+
+.card span {
+    background-color: #ff1e00;
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    display: block;
+    padding: 2px;
+    top: 15px;
+    left: 15px;
+    letter-spacing: 1.07px;
+    border-radius: 2px;
+    position: absolute;
+}
+
+.empty-lives {
+    height: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-lives p {
+    color: #FFF;
+    opacity: 0.8;
+}

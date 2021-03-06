@@ -1,0 +1,59 @@
+html, body, #root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background-color: #010001;
+}
+
+p, input, span, button {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: #010001;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading .square {
+  width: 180px;
+  height: 180px;
+  background-color: transparent;
+  border: 10px solid #010001;
+  border-top: 10px solid #F4442E;
+  animation: rotateIn 0.7s ease-in;
+  animation-iteration-count: infinite;
+  border-radius: 50%;
+}
+
+@keyframes rotateIn {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

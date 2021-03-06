@@ -1,13 +1,15 @@
-name: CI/CD Web
+name: Deploy Web
 
 on:
-  pull_request:
+  push:
     branches:
-      - master
+      - "master"
+    paths:
+      - "./web/**"
 
 jobs:
-  ci-job:
-    name: CI/CD job
+  deploy:
+    name: Deploy web
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -29,21 +31,17 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: Web -> Install depencies
+      - name: Install depencies
         working-directory: ./web
         run: yarn install
-      - name: Web -> Check lint
+      - name: Build
         working-directory: ./web
-        run: yarn eslint --ext=.jsx,.js,.tsx,.ts .
-      - name: Web -> Run tests
-        working-directory: ./web
-        run: yarn jest
-      - name: Server -> Install depencies
-        working-directory: ./server
-        run: yarn install
-      - name: Server -> Check lint
-        working-directory: ./server
-        run: yarn eslint --ext=.jsx,.js,.tsx,.ts .
-      - name: Server -> Run tests
-        working-directory: ./server
-        run: yarn jest
+        run: yarn build
+      - name: Deploy to Netlify
+        uses: jsmrcaga/action-netlify-deploy@v1.1.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_DEPLOY_MESSAGE: "Prod deploy v${{ github.ref }}"
+          NETLIFY_DEPLOY_TO_PROD: true
+          build_directory: ./web/build
